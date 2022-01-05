@@ -4,9 +4,14 @@ let computerChoice = choice;
 let playerChoice;
 let playerScore = 0;
 let computerScore = 0;
+let aWinner = false;
 const rockBtn = document.querySelector('#rockBtn');
 const paperBtn = document.querySelector('#paperBtn');
 const scissorsBtn = document.querySelector('#scissorsBtn');
+const results = document.querySelector('#results');
+let resultContent = document.createElement('p');
+let winnerDisplay = document.createElement('p');
+let gameWinner;
 
 
 let computerPlay = () => {
@@ -80,43 +85,93 @@ game();
 
 let score = () => {
   if(roundWinner == "player"){
-    playerScore++;
-    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
+    ++playerScore;
   }else if(roundWinner == "computer"){
-    computerScore++;
-    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
+    ++computerScore;
   }
   else {
-    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
-  }
+    
+    }
 }
 
 let btnClick = () => {
   rockBtn.addEventListener('click', () => {
+    resetScore();
     playerChoice = "rock";
     playRound();
-    console.log(roundWinner);
     score();
+    updateResults();
     
   });
 
   paperBtn.addEventListener('click', () => {
+    resetScore();
     playerChoice = "paper";
     playRound();
-    console.log(roundWinner);
     score();
+    updateResults();
   });
 
   scissorsBtn.addEventListener('click', () => {
+    resetScore();
     playerChoice = "scissors";
     playRound();
-    console.log(roundWinner);
     score();
+    updateResults();
+    
   });
 
 }
 
+let resetScore = () => {
+  if(aWinner == true){
+    computerScore = 0;
+    playerScore = 0; 
+    aWinner = false;
+    resultContent.remove();
+    winnerDisplay.remove();
+  }
+}
+
+let updateResults = () => {
+  if(playerScore < 5 && computerScore < 5){
+    resultContent.textContent = ( "Player Score is: " 
+    + playerScore 
+    + " Computer score is: " 
+    + computerScore);
+    document.getElementById('results').appendChild(resultContent);
+  }
+  else if(playerScore == 5 || computerScore == 5){
+    resultContent.textContent = ( "Player Score is: " 
+    + playerScore 
+    + " Computer score is: " 
+    + computerScore);
+    document.getElementById('results').appendChild(resultContent);
+    if(playerScore == 5){
+      gameWinner = "The player";
+    }
+    if(computerScore == 5){
+      gameWinner = "The computer";
+    }
+    winnerDisplay = document.createElement('p');
+    winnerDisplay.textContent = (gameWinner + " has won the game. Choose a sign to play again.");
+    document.getElementById('results').appendChild(winnerDisplay);
+    aWinner = true;
+  }
+  else {
+    resultContent = document.createElement('p');
+    resultContent.textContent = ("error");
+    document.getElementById('results').appendChild(resultContent);
+  }
+
+}
+
+
 window.onload = function(){
   btnClick();
+
+
+
 }
+
 
