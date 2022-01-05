@@ -1,10 +1,12 @@
 let choice = "";
 let roundWinner = "";
 let computerChoice = choice;
-let playerChoice = "";
+let playerChoice;
 let playerScore = 0;
 let computerScore = 0;
-
+const rockBtn = document.querySelector('#rockBtn');
+const paperBtn = document.querySelector('#paperBtn');
+const scissorsBtn = document.querySelector('#scissorsBtn');
 
 
 let computerPlay = () => {
@@ -37,6 +39,8 @@ let playRound = () => {
     console.log("error, playerChoice is not a correct answer");
   }
 };
+
+/*
 
 let game = () => {
 do{
@@ -71,3 +75,48 @@ else if (computerScore == 5){
 
 
 game();
+*/
+
+
+let score = () => {
+  if(roundWinner == "player"){
+    playerScore++;
+    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
+  }else if(roundWinner == "computer"){
+    computerScore++;
+    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
+  }
+  else {
+    console.log("playerScore = " + playerScore + " computerScore = " + computerScore);
+  }
+}
+
+let btnClick = () => {
+  rockBtn.addEventListener('click', () => {
+    playerChoice = "rock";
+    playRound();
+    console.log(roundWinner);
+    score();
+    
+  });
+
+  paperBtn.addEventListener('click', () => {
+    playerChoice = "paper";
+    playRound();
+    console.log(roundWinner);
+    score();
+  });
+
+  scissorsBtn.addEventListener('click', () => {
+    playerChoice = "scissors";
+    playRound();
+    console.log(roundWinner);
+    score();
+  });
+
+}
+
+window.onload = function(){
+  btnClick();
+}
+
